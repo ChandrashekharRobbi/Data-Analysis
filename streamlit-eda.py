@@ -5,9 +5,11 @@ import streamlit as st
 import matplotlib.pyplot as plt
 
 # 🌟 Introduction & Credits 🌟
+
 st.write("### 🌟 Welcome to the IPL EDA App 🌟")
-st.write("This app provides an exploratory data analysis of IPL matches over the years. Dive in, explore, and let the numbers tell the story! 📊🏏")
-st.write("Created with ❤️ by **Chandrashekhar Robbi**, a CSE AI & ML Engineer. 🚀")
+with st.expander("# Details  💎🎈",expanded=True):
+    st.write("This app provides an exploratory data analysis of IPL matches over the years. Dive in, explore, and let the numbers tell the story! 📊🏏")
+    st.write("Created with ❤️ by **Chandrashekhar Robbi**, a CSE AI & ML Engineer. 🚀")
 
 # set the app title
 st.title("EDA of IPL Matches 🏆")
@@ -15,7 +17,6 @@ st.title("EDA of IPL Matches 🏆")
 # Load the dataset
 df = pd.read_csv("data/IPL_Matches_2008_2022.csv")
 df["Season"] = df["Season"].astype('str')
-
 # Sidebar for user input
 with st.sidebar:
     st.header("🔧 User Input Features 🔧")
