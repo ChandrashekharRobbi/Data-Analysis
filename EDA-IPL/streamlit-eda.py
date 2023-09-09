@@ -24,7 +24,7 @@ with st.sidebar:
 **Chandrashekhar A Robbi** 🚀  
 📍 Thane, Maharashtra  
 📧 chandrashekarrobbi789@gmail.com  
-🔗 [LinkedIn](#) | [Github](#) | [Website](#)  
+🔗 [LinkedIn](https://www.linkedin.com/in/ChandrashekharRobbi) | [Github](https://github.com/ChandrashekharRobbi) | [Website](https://chandrashekharrobbi.github.io/Website/)  
 
 ---
 """)
@@ -104,15 +104,15 @@ else:
         st.write(f"🏟️ **Venue:** {Values('Venue')}")
         st.write(f"🏏 **Team 1:** {Values('Team1')}")
         
-        if st.checkbox("👥 Show Team 1 Players"):
-            st.subheader("Team 1 Squad")
+        if st.checkbox(f"👥 Show {Values('Team1')} Players"):
+            st.subheader(f"{Values('Team1')} Squad")
             val = ", ".join(ast.literal_eval(details_of_match['Team1Players'].values[0]))
             st.write(val)
             st.divider()
 
         st.write(f"🏏 **Team 2:** {Values('Team2')}")
-        if st.checkbox("👥 Show Team 2 Players"):
-            st.subheader("Team 2 Squad")
+        if st.checkbox(f"👥 Show {Values('Team2')} Players"):
+            st.subheader(f"{Values('Team2')} Squad")
             val = ", ".join(ast.literal_eval(details_of_match['Team2Players'].values[0]))
             st.write(val)
             st.divider()
