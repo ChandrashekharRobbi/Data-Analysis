@@ -5,7 +5,6 @@ import streamlit as st
 import matplotlib.pyplot as plt
 
 # 🌟 Introduction & Credits 🌟
-
 st.write("### 🌟 Welcome to the IPL EDA App 🌟")
 with st.expander("# Details  💎🎈",expanded=True):
     st.write("This app provides an exploratory data analysis of IPL matches over the years. Dive in, explore, and let the numbers tell the story! 📊🏏")
@@ -16,7 +15,8 @@ st.title("EDA of IPL Matches 🏆")
 
 # Load the dataset
 df = pd.read_csv("https://raw.githubusercontent.com/ChandrashekharRobbi/Data-Analysis/main/EDA-IPL/data/IPL_Matches_2008_2022.csv")
-df["Season"] = df["Season"].astype('str')
+# st.dataframe(df, column_config={"Season":st.column_config.NumberColumn(format="%d")})
+# df["Season"] = df["Season"].astype('str')
 # Sidebar for user input
 with st.sidebar:
     st.header("🔴 About Me")
@@ -53,7 +53,7 @@ if selected_year == "All Years":
     st.warning("⚠️ Please note: This is the total number of wins for all years, not individual years.")
     st.write("Created with ❤️ by **Chandrashekhar Robbi**, a CSE AI & ML Engineer. 🚀")
 else:
-    data_to_use = df[df["Season"] == f'{selected_year}']
+    data_to_use = df[df["Season"] == selected_year]
     st.subheader(f"Analysis for the Year: `{selected_year}` 📅")
     
     # plot the figure of wins
@@ -90,13 +90,12 @@ else:
     
     with st.expander("🔍 Detailed Analysis",expanded=True):
         st.subheader(f"🔬 Deep Dive into the Year: `{selected_year}`")
-        values = data_to_use["MatchNumber"].values[::-1]
-        index = st.slider("🔢 Select Match Number for Detailed Analysis", 1, len(values), help="Slide till end to view the `Semi Final` and `Final` Details 🥳")
-        selected_match = values[index - 1]
+        selected_match = st.select_slider(f"🔢 Select Match Number for Detailed Analysis (Out of {len(data_to_use['MatchNumber'].values)})",options=data_to_use["MatchNumber"].values[::-1] , help="Slide till end to view the `Semi Final` and `Final` Details 🥳")
         st.write(f"🎯 Selected Match Number is: {selected_match}")
 
         # Filter for the selected match
-        details_of_match = data_to_use[data_to_use["MatchNumber"] == f"{selected_match}"]
+        details_of_match = data_to_use[data_to_use["MatchNumber"] == selected_match]
+
         def Values(colName):
             return details_of_match[colName].values[0]
         
