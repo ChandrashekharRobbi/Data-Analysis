@@ -15,7 +15,7 @@ with st.expander("# Details  💎🎈",expanded=True):
 st.title("EDA of IPL Matches 🏆")
 
 # Load the dataset
-df = pd.read_csv("data/IPL_Matches_2008_2022.csv")
+df = pd.read_csv("https://raw.githubusercontent.com/ChandrashekharRobbi/Data-Analysis/main/EDA-IPL/data/IPL_Matches_2008_2022.csv")
 df["Season"] = df["Season"].astype('str')
 # Sidebar for user input
 with st.sidebar:
