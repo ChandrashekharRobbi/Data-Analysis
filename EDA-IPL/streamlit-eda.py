@@ -24,7 +24,7 @@ with st.sidebar:
 **Chandrashekhar A Robbi** 🚀  
 📍 Thane, Maharashtra  
 📧 chandrashekarrobbi789@gmail.com  
-🔗 [LinkedIn](#) | [Github](#) | [Website](#)  
+🔗 [LinkedIn](https://www.linkedin.com/in/ChandrashekharRobbi) | [Github](https://github.com/ChandrashekharRobbi) | [Website](https://chandrashekharrobbi.github.io/Website/)  
 
 ---
 """)
