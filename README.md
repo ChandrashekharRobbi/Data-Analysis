@@ -4,8 +4,8 @@ This repository serves as a comprehensive collection of data-driven projects div
 
 📁 **Highlighted Projects**:
 
-- [`EDA - IPL`](https://github.com/ChandrashekharRobbi/Data-Analysis/tree/main/EDA-IPL): A thorough exploratory data analysis of IPL matches spanning from 2008 to 2022. This deep dive uncovers match statistics, individual and team performances, and trends that have shaped this iconic cricketing event over the years.
+- [IPL](https://github.com/ChandrashekharRobbi/Data-Analysis/tree/main/EDA-IPL): A thorough exploratory data analysis of IPL matches spanning from 2008 to 2022. This deep dive uncovers match statistics, individual and team performances, and trends that have shaped this iconic cricketing event over the years.
 
-- [`EDA - Swiggy`](https://github.com/ChandrashekharRobbi/Data-Analysis/tree/main/EDA-Swiggy): Navigate the vast landscape of Swiggy restaurants across India. From pinpointing top-performing cities to uncovering the most sought-after cuisines, this analysis serves a feast of insights for food enthusiasts and data nerds alike.
+- [Swiggy](https://github.com/ChandrashekharRobbi/Data-Analysis/tree/main/Swiggy): Navigate the vast landscape of Swiggy restaurants across India. From pinpointing top-performing cities to uncovering the most sought-after cuisines, this analysis serves a feast of insights for food enthusiasts and data nerds alike.
 
 Stay tuned for more projects! Your exploration, contributions, and feedback are always welcome. Dive in and let the data spin its tale! 📈🍛🏏
