@@ -69,7 +69,7 @@ else:
 
         data = df[df["city"] == city_selected]["cuisine"].value_counts().reset_index()['count'][:10]
         keys = df[df["city"] == city_selected]["cuisine"].value_counts().reset_index()['cuisine'][:10]
-        st.header(f'Top 10 Cuisine Distribution in {city_selected}')
+        st.subheader(f'Top 10 Cuisine Distribution in {city_selected}')
         st.plotly_chart(px.pie(data, values=data, names=keys), use_container_width=True,width=200, height=500)
     with col2:
         st.subheader("Top Restaurants with there Starting cost ")
