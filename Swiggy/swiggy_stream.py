@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+st.set_page_config(theme="light")
 st.set_page_config(layout="wide")
 # Use caching to prevent re-loading data every time
 @st.cache_data 
@@ -68,7 +69,8 @@ else:
 
         data = df[df["city"] == city_selected]["cuisine"].value_counts().reset_index()['count'][:10]
         keys = df[df["city"] == city_selected]["cuisine"].value_counts().reset_index()['cuisine'][:10]
-        st.plotly_chart(px.pie(data, values=data, names=keys, title=f'Top 10 Cuisine Distribution in {city_selected}'), use_container_width=True,width=200, height=500)
+        st.header(f'Top 10 Cuisine Distribution in {city_selected}')
+        st.plotly_chart(px.pie(data, values=data, names=keys), use_container_width=True,width=200, height=500)
     with col2:
         st.subheader("Top Restaurants with there Starting cost ")
         st.bar_chart(result_df, x="name", y="cost",use_container_width=True)
