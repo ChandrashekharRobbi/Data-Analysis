@@ -1,44 +1,111 @@
 import streamlit as st
-# read csv on streamlit
 import pandas as pd
-df = pd.read_csv("swiggy.csv")
-st.write("Hey lets get work started")
-list_city = df["city"].unique()
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+st.set_page_config(layout="wide")
+# Use caching to prevent re-loading data every time
+@st.cache_data 
+def load_data():
+    return pd.read_csv("swiggy.csv")
+
+df = load_data()
+
+# Preliminary data checks
+if df.empty:
+    st.error("The data is empty!")
+    st.stop()
+
+# Sidebar and title improvements
 with st.sidebar:
-    st.info("This is a side bar")
-    city_selected = st.selectbox("Select or type your city",list_city)
-st.write("You selected",city_selected)
-# st.background("red")
-# list of available restaurants
-name_of_restaurants = df[df["city"] == city_selected]["name"].values
-st.write(f"List of available restaurants in {city_selected}")
-# st.write(name_of_restaurants)
+    st.header("🔴 About Me")
+    st.markdown("""
+**Chandrashekhar A Robbi** 🚀  
+📍 Thane, Maharashtra  
+📧 chandrashekarrobbi789@gmail.com  
+🔗 [LinkedIn](https://www.linkedin.com/in/ChandrashekharRobbi) | [Github](https://github.com/ChandrashekharRobbi) | [Website](https://chandrashekharrobbi.github.io/Website/)  
+""")
+    st.info("Explore more !!!")
+    city_selected = st.selectbox("Select or type your city",["Data Analysis"] + list(df["city"].unique().tolist()))
 
-selected_restaurant = st.selectbox("Select the restaurant",name_of_restaurants)
+if city_selected == "Data Analysis":
+    st.title("Data Analysis of the Swiggy Data Set")
+    with st.expander("# Details  💎🎈",expanded=True):
+        st.write("This app provides an exploratory data analysis of Swiggy Restaurants present in India. Dive in, explore, and let the numbers tell the story! 📊🏏")
+        st.write("Created with ❤️ by **Chandrashekhar Robbi**, a CSE AI & ML Engineer. 🚀")
+    st.subheader(f"There are `{len(df['city'].unique())}` cities in India 💝 associated with Swiggy.")
+    st.success(f"{df['city'].value_counts().idxmax()} is the 🥇 highest revenue generating city with `{df['city'].value_counts().max()}` hotels 🏨.")
 
-st.write(f"Information About the restaurant : {selected_restaurant}")
+    st.subheader("Cities with Top Hotels 🌟")
+    st.info("Ratings greater than 3.5")
+    df["rating"] = df["rating"].replace("--", 0)
+    ratings = df[df["rating"].astype(float) >= 3.5]["city"].value_counts()
+    st.bar_chart(ratings)
+    graph1, graph2 = st.columns(2)
+    with graph1:
+        # st.write(df.columns)
+        st.subheader("Distribution of Ratings Count 📋")
+        plt.figure(figsize=(6, 6))
+        sns.countplot(df['rating_count'], color='green', order=df['rating_count'].value_counts().index[:10])
+        plt.title('Distribution of Ratings Count')
+        # plt.
+        st.pyplot(plt)
+    with graph2:
+        st.subheader("Distribution of Ratings 🌈")
+        plt.figure(figsize=(6, 6))
+        sns.histplot(df[df['rating'] != 0]['rating'].astype(float), color='green')
+        plt.title('Distribution of Ratings')
+        # plt
+        st.pyplot(plt)
 
-seelected_df = df[(df["city"] == city_selected) & (df["name"] == selected_restaurant)].values.tolist()
-# st.write(df[df["name"] == selected_restaurant])
-# st.write(seelected_df)
+else:
+    st.header(f"Welcome to `{city_selected}`")
+    col1 , col2 = st.columns(2)
+    result_df = df[df["city"] == city_selected][["name", "cost"]]
+    result_df['cost'] = result_df['cost'].str.replace('₹', '').astype(int)  # Convert cost column to integer
+    result_df = result_df.sort_values(by='cost', ascending=True)
+    with col1:
 
-st.write(f'''
-    the cost {seelected_df[0][5]}
+        data = df[df["city"] == city_selected]["cuisine"].value_counts().reset_index()['count'][:10]
+        keys = df[df["city"] == city_selected]["cuisine"].value_counts().reset_index()['cuisine'][:10]
+        st.plotly_chart(px.pie(data, values=data, names=keys, title=f'Top 10 Cuisine Distribution in {city_selected}'), use_container_width=True,width=200, height=500)
+    with col2:
+        st.subheader("Top Restaurants with there Starting cost ")
+        st.bar_chart(result_df, x="name", y="cost",use_container_width=True)
 
-the rating {seelected_df[0][3]}
+    
+    # iterate through every row of selected cuisine and get all information such as name, cost, rating, rating_count, cuisine, address, link
+    tab1, tab2 = st.tabs(["Restaurant By Name", "Restaurant By Cuisine"])
+    with tab1:
+        st.subheader("Dig into Restaurant Details 🍽️")
+        selected_restaurant = st.selectbox("Available Restaurants:", df[df["city"] == city_selected]["name"].unique())
+    
+        restaurant_info = df[(df["city"] == city_selected) & (df["name"] == selected_restaurant)].iloc[0]
+        
+        st.markdown(f"""
+            **Starting Cost**: {restaurant_info['cost']}  
+            **Rating**: {restaurant_info['rating']}  
+            **No of Reviews**: {restaurant_info['rating_count']}  
+            **Cuisine**: {restaurant_info['cuisine']}  
+            **Address**: {restaurant_info['address']}  
+            [Link to the restaurant]({restaurant_info['link']})
+        """)
+    
+    with tab2:
+        st.subheader("Taste the Cuisines 🍜")
+        selected_cuisine = st.selectbox("Available Cuisines:", df[df["city"] == city_selected]["cuisine"].unique())
+        # st.write(df[(df["city"] == city_selected) & (df["cuisine"] == selected_cuisine)])
 
-No of Reviws {seelected_df[0][4]}
+        for index, row in df[(df["city"] == city_selected) & (df["cuisine"] == selected_cuisine)].iterrows():
+            st.divider()
+            st.markdown(f"""
+            **Name** : {row['name']}
+            **Starting Cost**: {row['cost']}  
+            **Rating**: {row['rating']}  
+            **No of Reviews**: {row['rating_count']}  
+            **Cuisine**: {row['cuisine']}  
+            **Address**: {row['address']}  
+            [Link to the restaurant]({row['link']})
+        """)
+        
 
-Cuisine Famous For {seelected_df[0][6]}
-
-Address: {seelected_df[0][9]}
-
-
-Head over to book from this restaurant : {seelected_df[0][8]}
-
-    ''')
-result_df = df[df["city"] == city_selected][["name", "cost"]]
-result_df['cost'] = result_df['cost'].str.replace('₹', '').astype(int)  # Convert cost column to integer
-result_df = result_df.sort_values(by='cost', ascending=False)
-st.line_chart(result_df, x="name", y="cost")
-st.map(df[df["city"] == city_selected])
