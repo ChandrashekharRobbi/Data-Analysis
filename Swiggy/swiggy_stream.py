@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
-st.set_page_config(theme="light")
+# st.set_page_config(theme="light")
 st.set_page_config(layout="wide")
 # Use caching to prevent re-loading data every time
 @st.cache_data 
